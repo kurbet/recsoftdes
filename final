@@ -3,49 +3,48 @@ from random import randint
 
 board = []
 
-for x in range(6):
+for x in range(6): #criação do campo
     board.append(["O"] * 6)
 
-def print_board(board):
+def cria_campo(board):  #criação do campo - tirando aspas
     for row in board:
         zz = " "
         a11 = zz.join(row)
         print (a11)
 
-print ("Let's play Battleship!")
-print_board(board)
+print ("Vamos começar o jogo!" \
+"Bem vindo ao Batalha Naval!")
+cria_campo(board)
 
-def random_row(board):
+def sorteia_linha(board): #sorteia a linha - poisção do barco
     return randint(1, len(board) - 1)
 
-def random_col(board):
+def sorteia_coluna(board): #sorteia a coluna - posição do barco
     return randint(1, len(board[0]) - 1)
 
-ship_row = random_row(board)
-ship_col = random_col(board)
-
-# Everything from here on should go in your for loop!
-# Be sure to indent four spaces!
+linha_barco = sorteia_linha(board)
+coluna_barco = sorteia_coluna(board)
 turn = 0
-for turn in range(3):
+for turn in range(4):  #criando chances
     turn = turn + 1
-    guess_row = int(input("Guess Row: "))
-    guess_col = int(input("Guess Col: "))
+    user_linha = int(input("Tente acertar a linha: "))  #pergunta a linha
+    user_coluna = int(input("Tente acertar a coluna: "))  #pergunta a coluna
 
-    if guess_row == ship_row and guess_col == ship_col:
-        print ("Congratulations! You sunk my battleship!")
+    if user_linha == linha_barco and user_coluna == coluna_barco:
+        print ("Parabéns! Você me venceu!")
         break
     else:
-        if (guess_row >= 6) or (guess_col >= 6):
-            print ("Oops, that's not even in the ocean.")
-        elif(board[guess_row][guess_col] == "X"):
-            print ("You guessed that one already.")
+        if (user_linha >= 6) or (user_coluna >= 6):
+            print ("Putzz..aí já é terra firme!")
+        elif(board[user_linha][user_coluna] == "X"):
+            print ("Você já tentou essa!")
         else:
             if turn == 3:
                 print ("Game Over")
             else:
-                print ("You missed my battleship!")
-                board[guess_row][guess_col] = "X" 
+                print ("Eu ganhei :)")
+                board[user_linha][user_coluna] = "X" 
                 print  ("Turn", turn + 1)        
-    # Print (turn + 1) here!
-        print_board(board)
+    
+        cria_campo(board)
+    
