@@ -47,4 +47,6 @@ for turn in range(4):  #criando chances
                 print  ("Turn", turn + 1)        
     
         cria_campo(board)
+        
+        
     
