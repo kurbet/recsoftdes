@@ -6,28 +6,20 @@ Created on Mon Oct 26 09:53:39 2015
 """
 
 
-"""
-RESOLVER:   1- ACERTOS E ERROS (PLACAR)
-            
-            3- TAMANHO E VALORES
-"""
-
-
 from random import randint
 
 input ("Para conhecer as características do jogo vá apertando a tecla enter")
 input("Bem vindo ao Batalha Naval...")
 input("Se quiser me vencer, deverá acertar a posição dos barcos!") 
-input("Existirá dois barcos num campo 10x10! Valendo um total de 3 pontos!")
-input("Vale lembrar que existem as linhas e colunas de valor 0...")
-input("Além de que se jogar duas vezes a mesma cordenada, contará como uma tentativa :|") 
-input("Você terá apenas 5 tentativas para conseguir os 3 pontos...Boa sorte!")
+input("Se jogar duas vezes a mesma cordenada, contará como uma tentativa :|") 
+input("Existirá um campo 10x10! Use as 5 tentativas para me vencer....Boa sorte!")
 input("Vamos começar o jogo!")            #introdução
+
 print("Turn 1")
 
 board = []  #abre lista para criar o campo
 
-for x in range(6): #criação do campo
+for x in range(10): #criação do campo
     board.append(["O"] * 10)
 
 def cria_campo(board):  #criação do campo - tirando aspas
@@ -36,9 +28,6 @@ def cria_campo(board):  #criação do campo - tirando aspas
         a11 = zz.join(row)
         print (a11)
 
-cria_campo(board)       #chama a função cria_campo; printa o campo
-
-
 def sorteia_linha(board): #sorteia a linha - poisção do barco
     return randint(1, len(board) - 1)
     
@@ -46,42 +35,35 @@ def sorteia_linha(board): #sorteia a linha - poisção do barco
 def sorteia_coluna(board): #sorteia a coluna - posição do barco
     return randint(1, len(board) - 1)
 
-def sorteia_linha2(board): #sorteia a linha - poisção do barco
-    return randint(1, len(board) - 1)
-
-def sorteia_coluna2(board): #sorteia a coluna - posição do barco)
-    return randint(1, len(board) - 1)
-
     
-linha_barco = sorteia_linha(board)
-coluna_barco = sorteia_coluna(board)
-linha_barco2 = sorteia_linha2(board)
-coluna_barco2 = sorteia_coluna2(board)
+linha_barco = sorteia_linha(board)      #mudando nome da variável
+coluna_barco = sorteia_coluna(board)    #mudando nome da variável
+#print (linha_barco)
+#print (coluna_barco)
 
-
-print (linha_barco)
-print (coluna_barco)
-print (linha_barco2)
-print (coluna_barco2)
 
 turn = 0
 acertos = 0
 erros = 0
+
 while (True):
     for turn in range(5):  #criando chances
+        cria_campo(board)
         turn = turn + 1
         acertos = acertos + 0
         erros = erros + 0
         user_linha = int(input("Tente acertar a linha: "))  #pergunta a linha
         user_coluna = int(input("Tente acertar a coluna: "))  #pergunta a coluna
+        user_linha = user_linha-1             #para enquadrar no campo
+        user_coluna = user_coluna-1 
         if user_linha == linha_barco and user_coluna == coluna_barco:       #acertou as posições
             print ("Parabéns! Você me venceu!")
             print ("Acertos", acertos + 1)
             print ("Erros", erros)
-            break 
-            
+            break
+        
         else:
-            if (user_linha >= 10) or (user_coluna >= 10):     #fora de campo
+            if (user_linha >= 11) or (user_coluna >= 11):     #fora de campo
                 print ("Putzz..aí já é terra firme!")
                 
             else:
@@ -101,8 +83,5 @@ while (True):
                     print  ("Turn", turn + 1)
                     print  ("Acertos", acertos)
                     print  ("Erros", erros + 1)
-                
-
-            cria_campo(board)
     break
               
