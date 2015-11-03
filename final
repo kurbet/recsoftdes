@@ -1,7 +1,30 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct 26 09:53:39 2015
+
+@author: andre_000
+"""
+
+
+"""
+RESOLVER:   1- ACERTOS E ERROS (PLACAR)
+            
+            3- TAMANHO E VALORES
+"""
+
+
 from random import randint
 
+input ("Para conhecer as características do jogo vá apertando a tecla enter")
+input("Bem vindo ao Batalha Naval...")
+input("Se quiser me vencer, deverá acertar a posição dos barcos!") 
+input("Vale lembrar que existem as linhas e colunas de valor 0...")
+input("Além de que se jogar duas vezes a mesma cordenada, contará como uma tentativa :|") 
+input("Você terá apenas 5 tentativas...Boa sorte!")
+input("Vamos começar o jogo!")            #introdução
+print("Turn 1")
 
-board = []
+board = []  #abre lista para criar o campo
 
 for x in range(6): #criação do campo
     board.append(["O"] * 6)
@@ -12,41 +35,59 @@ def cria_campo(board):  #criação do campo - tirando aspas
         a11 = zz.join(row)
         print (a11)
 
-print ("Vamos começar o jogo!" \
-"Bem vindo ao Batalha Naval!")
-cria_campo(board)
+cria_campo(board)       #chama a função cria_campo; printa o campo
+
 
 def sorteia_linha(board): #sorteia a linha - poisção do barco
-    return randint(1, len(board) - 1)
+    return randint(1, len(board[0]) - 1)
+    
 
 def sorteia_coluna(board): #sorteia a coluna - posição do barco
     return randint(1, len(board[0]) - 1)
-
+    
 linha_barco = sorteia_linha(board)
 coluna_barco = sorteia_coluna(board)
-turn = 0
-for turn in range(4):  #criando chances
-    turn = turn + 1
-    user_linha = int(input("Tente acertar a linha: "))  #pergunta a linha
-    user_coluna = int(input("Tente acertar a coluna: "))  #pergunta a coluna
 
-    if user_linha == linha_barco and user_coluna == coluna_barco:
-        print ("Parabéns! Você me venceu!")
-        break
-    else:
-        if (user_linha >= 6) or (user_coluna >= 6):
-            print ("Putzz..aí já é terra firme!")
-        elif(board[user_linha][user_coluna] == "X"):
-            print ("Você já tentou essa!")
+print (linha_barco)
+print (coluna_barco)
+
+turn = 0
+acertos = 0
+erros = 0
+while (True):
+    for turn in range(5):  #criando chances
+        turn = turn + 1
+        user_linha = int(input("Tente acertar a linha: "))  #pergunta a linha
+        user_coluna = int(input("Tente acertar a coluna: "))  #pergunta a coluna
+        if user_linha == linha_barco and user_coluna == coluna_barco:       #acertou as posições
+            print ("Parabéns! Você me venceu!")
+            print ("Acertos", acertos + 1)
+            print ("Erros", erros)
+            break
+            
         else:
-            if turn == 3:
-                print ("Game Over")
+            if (user_linha >= 6) or (user_coluna >= 6):     #fora de campo
+                print ("Putzz..aí já é terra firme!")
+                
             else:
-                print ("Eu ganhei :)")
-                board[user_linha][user_coluna] = "X" 
-                print  ("Turn", turn + 1)        
-    
-        cria_campo(board)
-        
-        
-    
+                if turn == 5:           #acabou tentativas
+                    print ("Game Over")
+                    print ("Acertos", acertos)
+                    print ("Erros", erros + 5)
+                    break
+                elif (board[user_linha][user_coluna] == "X"):       #cordenada já tentada
+                    print ("Você já tentou essa cordenada!")
+                    print  ("Turn", turn + 1)
+                    print  ("Acertos", acertos)
+                    print  ("Erros", erros + 1)
+                else:
+                    print ("Eu ganhei :)")          #errou
+                    board[user_linha][user_coluna] = "X" 
+                    print  ("Turn", turn + 1)
+                    print  ("Acertos", acertos)
+                    print  ("Erros", erros + 1)
+                
+
+            cria_campo(board)
+    break
+              
